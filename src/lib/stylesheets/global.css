@@ -1,0 +1,28 @@
+@font-face {
+    font-family: 'Outfit Bold';
+    src: url('../fonts/Outfit-Bold.ttf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Soleil Bold';
+    src: url('../fonts/soleil-bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: Soleil;
+    src: url('../fonts/soleil.woff') format('woff');
+}
+
+:root {
+    --gold: #BE8C0A;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font: 18px 'Soleil', sans-serif;
+}
+
+html, body {
+    overscroll-behavior: none;
+}

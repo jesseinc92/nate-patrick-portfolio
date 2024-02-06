@@ -44,12 +44,12 @@
 
     .project-text {
         margin-top: 38px;
+    }
 
-        & h2 {
-            font: 30px 'Outfit Bold', sans-serif;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
+    .project-text h2 {
+        font: 30px 'Outfit Bold', sans-serif;
+        text-transform: uppercase;
+        margin-bottom: 10px;
     }
 
     .tag-area {
@@ -61,5 +61,11 @@
 
     .extra-padding {
         margin-top: 86px;
+    }
+
+    @media screen and (min-width: 768px) {
+        .project-text p {
+            font-size: 14px;
+        }
     }
 </style>

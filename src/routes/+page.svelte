@@ -6,11 +6,14 @@
     import Footer from '../lib/components/Footer.svelte';
     import ProjectCard from '../lib/components/cards/ProjectCard.svelte';
     import BackgroundShape from '../lib/components/BackgroundShape.svelte';
+    import Header from '../lib/components/header/Header.svelte';
+    import DesktopArrowIcon from '../lib/components/icons/DesktopArrowIcon.svelte';
 
     const projects = [
         {
             image: '/assets/homepage/cas-mockup.png',
             imageWidth: '83.5%',
+            desktopWidth: '381px',
             imageAlt: '',
             padding: false,
             name: 'CAS',
@@ -36,69 +39,93 @@
             tags: ['editorial design', 'content', 'writing', 'research', 'interviews', 'distribution']
         }
     ]
+
+    let i = 0;
+    function handleScroll() {
+        console.log('scroll')
+    }
 </script>
 
 <main class='homepage'>
     <div class='foreground'>
-        <section class='hero-section'>
-            <div class='hero-image'>
-                <img src='/assets/homepage/headshot.jpeg' alt="Nate headshot">
-            </div>
-    
-            <div class='hero-text'>
-                <h1>Nate Patrick</h1>
+        <Header />
+
+        <div class='homepage-contents'>
+            <section class='hero-section'>
+                <div class='hero-image'>
+                    <img src='/assets/homepage/headshot.jpeg' alt="Nate headshot">
+                </div>
         
-                <p>
-                    is a product designer who is fascinated with the intersection of technology, 
-                    science, and art. A unique combination of elements, he specializes in design 
-                    thinking, <strong>leadership</strong>, <strong>strategy</strong>, <strong>user experiences</strong>, 
-                    interfaces, service design, books, and, occasionally, physical spaces. 
-                </p>
+                <div class='hero-text'>
+                    <h1>Nate Patrick</h1>
+            
+                    <p>
+                        is a product designer who is fascinated with the intersection of technology, 
+                        science, and art. A unique combination of elements, he specializes in design 
+                        thinking, <strong>leadership</strong>, <strong>strategy</strong>, <strong>user experiences</strong>, 
+                        interfaces, service design, books, and, occasionally, physical spaces. 
+                    </p>
+            
+                    <div class='desktop-scroll-arrow-container'>
+                        <p class='hero-arrow-text'>Here is some of his work</p>
+                        <DesktopArrowIcon />
+                    </div>
+                </div>
         
-                <p>Here is some of his work</p>
-            </div>
-    
-            <div class='social-icons'>
-                <LinkedInIcon color='#0E0E0E' />
-                <MailIcon color='#0E0E0E' />
-            </div>
-    
-            <div class='scroll-arrow-container'>
-                <!-- <div class='stem'></div>
-                <div class='head-one'></div>
-                <div class='head-two'></div> -->
-                <MobileArrowIcon />
-            </div>
-        </section>
-    
-        <section class='project-section'>
-            {#each projects as project}
+                <div class='mobile-scroll-arrow-container'>
+                    <MobileArrowIcon />
+                </div>
+            </section>
+
+            <section class='desktop-project-section' on:scroll|preventDefault={handleScroll}>
                 <ProjectCard 
-                    image={project.image}
-                    imageWidth={project.imageWidth}
-                    imageAlt={project.imageAlt}
-                    extraImagePadding={project.padding}
-                    name={project.name}
-                    text={project.text}
-                    tags={project.tags}
+                    image={projects[i].image}
+                    imageWidth={projects[i].desktopWidth}
+                    imageAlt={projects[i].imageAlt}
+                    extraImagePadding={projects[i].padding}
+                    name={projects[i].name}
+                    text={projects[i].text}
+                    tags={projects[i].tags}
                 />
-            {/each}
-        </section>
+
+                <div class='desktop-scroll-control'>
+                    <div class='circle one'></div>
+                    <div class='circle two'></div>
+                    <div class='circle three'></div>
+                </div>
+            </section>
+        
+            <section class='mobile-project-section'>
+                {#each projects as project}
+                    <ProjectCard 
+                        image={project.image}
+                        imageWidth={project.imageWidth}
+                        imageAlt={project.imageAlt}
+                        extraImagePadding={project.padding}
+                        name={project.name}
+                        text={project.text}
+                        tags={project.tags}
+                    />
+                {/each}
+            </section>
+        </div>
     
         <Footer />
     </div>
-
-    <!-- <BackgroundShape /> -->
 </main>
 
 <style>
     .foreground {
-        /* position: absolute; */
-        padding: 89px 20px;
+        padding: 37px 20px 89px;
     }
 
     .homepage {
+        overflow: hidden;
         background-color: #E0E0E0;
+        min-height: 100vh;
+        /* background: no-repeat #E0E0E0 url('/assets/homepage/gradient.svg');
+        background-size: contain;
+        background-position-y: 50%; */
     }
 
     .hero-section {
@@ -135,42 +162,87 @@
         }
     }
 
-    .social-icons {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 24px;
-        margin: auto;
-    }
-
-    .scroll-arrow-container {
+    .mobile-scroll-arrow-container {
         width: fit-content;
         margin: auto;
         margin-top: 75px;
-
-        /* & .stem {
-            height: 150px;
-            width: 2px;
-            margin: auto;
-            background-color: #BE8C0A;
-        }
-
-        & .head-one {
-            height: 5px;
-            width: 2px;
-            background-color: #BE8C0A;
-        }
-
-        & .head-two {
-            height: 5px;
-            width: 2px;
-            background-color: #BE8C0A;
-        } */
     }
 
-    .project-section {
+    .mobile-project-section {
         display: flex;
         flex-direction: column;
         gap: 80px;
+    }
+
+    @media screen and (min-width: 768px) {
+        .mobile-project-section {
+            display: none;
+        }
+
+        .foreground {
+            padding: 58px 100px;
+            min-height: calc(100vh - 116px);
+            position: relative;
+        }
+
+        .homepage-contents {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .hero-section {
+            width: 50%;
+            max-width: 490px;
+            margin-top: 86px;
+            margin-bottom: unset;
+        }
+
+        .hero-image {
+            width: 171px;
+            height: 171px;
+            margin: unset;
+        }
+
+        .hero-text {
+            margin: 26px auto;
+        }
+
+        .mobile-scroll-arrow-container {
+            display: none;
+        }
+
+        .desktop-scroll-arrow-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-arrow-text {
+            margin-right: 30px;
+        }
+
+        .desktop-project-section {
+            margin-top: 25px;
+            width: 583px;
+            position: relative;
+        }
+
+        .desktop-scroll-control {
+            height: 30px;
+            width: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: absolute;
+            right: -41px;
+            top: 50%;
+        }
+
+        .circle {
+            height: 5px;
+            width: 5px;
+            border-radius: 50%;
+            background-color: #0E0E0E;
+            opacity: 0.3;
+        }
     }
 </style>

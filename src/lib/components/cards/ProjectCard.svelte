@@ -64,8 +64,21 @@
     }
 
     @media screen and (min-width: 768px) {
+        .project-card {
+            scroll-snap-align: center;
+            margin-bottom: 150px;
+        }
+
         .project-text p {
             font-size: 14px;
+        }
+
+        .tag-area {
+            margin-top: 17px;
+        }
+
+        .extra-padding {
+            margin-top: 50px;
         }
     }
 </style>

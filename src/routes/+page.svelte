@@ -8,6 +8,7 @@
     import BackgroundShape from '../lib/components/BackgroundShape.svelte';
     import Header from '../lib/components/header/Header.svelte';
     import DesktopArrowIcon from '../lib/components/icons/DesktopArrowIcon.svelte';
+    import { onMount } from 'svelte';
 
     const projects = [
         {
@@ -23,6 +24,7 @@
         {
             image: '/assets/homepage/daybase-mockup.png',
             imageWidth: '53.1%',
+            desktopWidth: '130px',
             imageAlt: '',
             padding: false,
             name: 'Daybase',
@@ -32,6 +34,7 @@
         {
             image: '/assets/homepage/books-mockup.png',
             imageWidth: '90%',
+            desktopWidth: '300px',
             imageAlt: '',
             padding: true,
             name: 'Clog X',
@@ -40,9 +43,29 @@
         }
     ]
 
-    let i = 0;
+    let projectsElement, circleOne, circleTwo, circleThree
+    let scrollTimeout;
     function handleScroll() {
-        console.log('scroll')
+        clearTimeout(scrollTimeout)
+        scrollTimeout = setTimeout(() => {
+            let topValue = projectsElement.scrollTop
+            if (topValue === 0.5) {
+                console.log('first')
+                circleOne.style.opacity = 1
+                circleTwo.style.opacity = 0.3
+                circleThree.style.opacity = 0.3
+            } else if (topValue === 618) {
+                console.log('second')
+                circleOne.style.opacity = 0.3
+                circleTwo.style.opacity = 1
+                circleThree.style.opacity = 0.3
+            } else if (topValue === 1236) {
+                console.log('third')
+                circleOne.style.opacity = 0.3
+                circleTwo.style.opacity = 0.3
+                circleThree.style.opacity = 1
+            }        
+        }, 50)
     }
 </script>
 
@@ -68,7 +91,9 @@
             
                     <div class='desktop-scroll-arrow-container'>
                         <p class='hero-arrow-text'>Here is some of his work</p>
-                        <DesktopArrowIcon />
+                        <div class='desktop-scroll-arrow'>
+                            <DesktopArrowIcon />
+                        </div>
                     </div>
                 </div>
         
@@ -77,21 +102,25 @@
                 </div>
             </section>
 
-            <section class='desktop-project-section' on:scroll|preventDefault={handleScroll}>
-                <ProjectCard 
-                    image={projects[i].image}
-                    imageWidth={projects[i].desktopWidth}
-                    imageAlt={projects[i].imageAlt}
-                    extraImagePadding={projects[i].padding}
-                    name={projects[i].name}
-                    text={projects[i].text}
-                    tags={projects[i].tags}
-                />
-
+            <section class='desktop-project-section'>
+                <div class='projects' on:scroll={handleScroll} bind:this={projectsElement}>
+                    {#each projects as project}
+                        <ProjectCard 
+                            image={project.image}
+                            imageWidth={project.desktopWidth}
+                            imageAlt={project.imageAlt}
+                            extraImagePadding={project.padding}
+                            name={project.name}
+                            text={project.text}
+                            tags={project.tags}
+                        />
+                    {/each}
+                </div>
+                
                 <div class='desktop-scroll-control'>
-                    <div class='circle one'></div>
-                    <div class='circle two'></div>
-                    <div class='circle three'></div>
+                    <div class='circle one' bind:this={circleOne}></div>
+                    <div class='circle' bind:this={circleTwo}></div>
+                    <div class='circle' bind:this={circleThree}></div>
                 </div>
             </section>
         
@@ -120,7 +149,7 @@
     }
 
     .homepage {
-        overflow: hidden;
+        /* overflow: hiddden; */
         background-color: #E0E0E0;
         min-height: 100vh;
         /* background: no-repeat #E0E0E0 url('/assets/homepage/gradient.svg');
@@ -162,6 +191,10 @@
         }
     }
 
+    .desktop-scroll-arrow-container {
+        display: none;
+    }
+
     .mobile-scroll-arrow-container {
         width: fit-content;
         margin: auto;
@@ -172,6 +205,10 @@
         display: flex;
         flex-direction: column;
         gap: 80px;
+    }
+
+    .desktop-project-section {
+        display: none;
     }
 
     @media screen and (min-width: 768px) {
@@ -221,9 +258,17 @@
         }
 
         .desktop-project-section {
-            margin-top: 25px;
+            display: block;
+            margin-top: 45px;
             width: 583px;
             position: relative;
+        }
+
+        .projects {
+            max-height: 500px;
+            overflow: scroll;
+            scrollbar-width: none;
+            scroll-snap-type: y mandatory;
         }
 
         .desktop-scroll-control {
@@ -243,6 +288,10 @@
             border-radius: 50%;
             background-color: #0E0E0E;
             opacity: 0.3;
+        }
+
+        .one {
+            opacity: 1;
         }
     }
 </style>

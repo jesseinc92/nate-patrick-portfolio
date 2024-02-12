@@ -44,29 +44,33 @@
     ]
 
     let projectsElement, circleOne, circleTwo, circleThree
-    let scrollTimeout;
+    let scrollTimeout, i = 1, oldScroll = 0, newScroll = 0, intermediate;
     function handleScroll() {
         clearTimeout(scrollTimeout)
         scrollTimeout = setTimeout(() => {
             let topValue = projectsElement.scrollTop
-            if (topValue === 0.5) {
-                console.log('first')
+            if (topValue >= 0 && topValue <= 50) {
+                console.log(topValue, 'first')
                 circleOne.style.opacity = 1
                 circleTwo.style.opacity = 0.3
                 circleThree.style.opacity = 0.3
-            } else if (topValue === 618) {
-                console.log('second')
+            } else if (topValue >= 600 && topValue <= 650) {
+                console.log(topValue, 'second')
                 circleOne.style.opacity = 0.3
                 circleTwo.style.opacity = 1
                 circleThree.style.opacity = 0.3
-            } else if (topValue === 1236) {
-                console.log('third')
+            } else if (topValue >= 1200 && topValue <= 1275) {
+                console.log(topValue, 'third')
                 circleOne.style.opacity = 0.3
                 circleTwo.style.opacity = 0.3
                 circleThree.style.opacity = 1
             }        
         }, 50)
     }
+
+    onMount(() => {
+        console.log(projectsElement)
+    })
 </script>
 
 <main class='homepage'>
@@ -262,6 +266,7 @@
             margin-top: 45px;
             width: 583px;
             position: relative;
+            overscroll-behavior: none;
         }
 
         .projects {
@@ -269,6 +274,10 @@
             overflow: scroll;
             scrollbar-width: none;
             scroll-snap-type: y mandatory;
+        }
+
+        .projects::-webkit-scrollbar {
+            display: none;
         }
 
         .desktop-scroll-control {

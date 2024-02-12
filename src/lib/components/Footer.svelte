@@ -1,12 +1,13 @@
 <script>
     import LinkedInIcon from './icons/LinkedInIcon.svelte';
     import MailIcon from './icons/MailIcon.svelte';
+    import store from '../stores/store.js'
 </script>
 
 <footer class='footer'>
     <div class='footer-icons'>
-        <LinkedInIcon color='#0E0E0E' />
-        <MailIcon color='#0E0E0E' />
+        <LinkedInIcon color={$store.palette.stroke} />
+        <MailIcon color={$store.palette.stroke} />
     </div>
     <p class='footer-text'>Proudly made in Columbus, Ohio</p>
 </footer>

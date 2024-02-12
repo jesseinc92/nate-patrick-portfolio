@@ -1,13 +1,12 @@
 <script>
     import '../lib/stylesheets/global.css'
-    import LinkedInIcon from '../lib/components/icons/LinkedInIcon.svelte';
-    import MailIcon from '../lib/components/icons/MailIcon.svelte';
     import MobileArrowIcon from '../lib/components/icons/MobileArrowIcon.svelte';
     import Footer from '../lib/components/Footer.svelte';
     import ProjectCard from '../lib/components/cards/ProjectCard.svelte';
     import BackgroundShape from '../lib/components/BackgroundShape.svelte';
     import Header from '../lib/components/header/Header.svelte';
     import DesktopArrowIcon from '../lib/components/icons/DesktopArrowIcon.svelte';
+    import store from '../lib/stores/store.js'
     import { onMount } from 'svelte';
 
     const projects = [
@@ -67,13 +66,9 @@
             }        
         }, 50)
     }
-
-    onMount(() => {
-        console.log(projectsElement)
-    })
 </script>
 
-<main class='homepage'>
+<main class='homepage' style={`background-color: ${$store.palette.background}; color: ${$store.palette.text}`}>
     <div class='foreground'>
         <Header />
 
@@ -122,9 +117,9 @@
                 </div>
                 
                 <div class='desktop-scroll-control'>
-                    <div class='circle one' bind:this={circleOne}></div>
-                    <div class='circle' bind:this={circleTwo}></div>
-                    <div class='circle' bind:this={circleThree}></div>
+                    <div style={`background-color: ${$store.palette.scrollDots};`} class='circle one' bind:this={circleOne}></div>
+                    <div style={`background-color: ${$store.palette.scrollDots};`} class='circle' bind:this={circleTwo}></div>
+                    <div style={`background-color: ${$store.palette.scrollDots};`} class='circle' bind:this={circleThree}></div>
                 </div>
             </section>
         
@@ -154,7 +149,6 @@
 
     .homepage {
         /* overflow: hiddden; */
-        background-color: #E0E0E0;
         min-height: 100vh;
         /* background: no-repeat #E0E0E0 url('/assets/homepage/gradient.svg');
         background-size: contain;
@@ -163,6 +157,7 @@
 
     .hero-section {
         margin-bottom: 248px;
+        pointer-events: none;
     }
 
     .hero-image {
@@ -221,6 +216,8 @@
         }
 
         .foreground {
+            max-width: 1300px;
+            margin: auto;
             padding: 58px 100px;
             min-height: calc(100vh - 116px);
             position: relative;
@@ -295,7 +292,6 @@
             height: 5px;
             width: 5px;
             border-radius: 50%;
-            background-color: #0E0E0E;
             opacity: 0.3;
         }
 

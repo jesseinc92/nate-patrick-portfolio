@@ -1,5 +1,4 @@
 <script>
-    import '../lib/stylesheets/global.css'
     import MobileArrowIcon from '../lib/components/icons/MobileArrowIcon.svelte';
     import Footer from '../lib/components/Footer.svelte';
     import ProjectCard from '../lib/components/cards/ProjectCard.svelte';
@@ -7,14 +6,13 @@
     import Header from '../lib/components/header/Header.svelte';
     import DesktopArrowIcon from '../lib/components/icons/DesktopArrowIcon.svelte';
     import store from '../lib/stores/store.js'
-    import { onMount } from 'svelte';
 
     const projects = [
         {
             image: '/assets/homepage/cas-mockup.png',
             imageWidth: '83.5%',
             desktopWidth: '381px',
-            imageAlt: '',
+            imageAlt: 'computer mockup',
             padding: false,
             name: 'CAS',
             text: 'Creating great search experiences and tools for scientific information and improving people’s lives through the power of chemistry and biology.',
@@ -24,7 +22,7 @@
             image: '/assets/homepage/daybase-mockup.png',
             imageWidth: '53.1%',
             desktopWidth: '130px',
-            imageAlt: '',
+            imageAlt: 'daybase app view mockup',
             padding: false,
             name: 'Daybase',
             text: 'A start up that sought to revolutionize the workday by helping you work where you live.',
@@ -34,7 +32,7 @@
             image: '/assets/homepage/books-mockup.png',
             imageWidth: '90%',
             desktopWidth: '300px',
-            imageAlt: '',
+            imageAlt: 'a selection of book covers',
             padding: true,
             name: 'Clog X',
             text: 'A book series which explores, from multiple viewpoints and through a variety of means, a single subject particularly relevant to now.',
@@ -68,93 +66,77 @@
     }
 </script>
 
-<main class='homepage' style={`background-color: ${$store.palette.background}; color: ${$store.palette.text}`}>
-    <div class='foreground'>
-        <Header />
+<Header />
 
-        <div class='homepage-contents'>
-            <section class='hero-section'>
-                <div class='hero-image'>
-                    <img src='/assets/homepage/headshot.jpeg' alt="Nate headshot">
-                </div>
-        
-                <div class='hero-text'>
-                    <h1>Nate Patrick</h1>
-            
-                    <p>
-                        is a product designer who is fascinated with the intersection of technology, 
-                        science, and art. A unique combination of elements, he specializes in design 
-                        thinking, <strong>leadership</strong>, <strong>strategy</strong>, <strong>user experiences</strong>, 
-                        interfaces, service design, books, and, occasionally, physical spaces. 
-                    </p>
-            
-                    <div class='desktop-scroll-arrow-container'>
-                        <p class='hero-arrow-text'>Here is some of his work</p>
-                        <div class='desktop-scroll-arrow'>
-                            <DesktopArrowIcon />
-                        </div>
-                    </div>
-                </div>
-        
-                <div class='mobile-scroll-arrow-container'>
-                    <MobileArrowIcon />
-                </div>
-            </section>
-
-            <section class='desktop-project-section'>
-                <div class='projects' on:scroll={handleScroll} bind:this={projectsElement}>
-                    {#each projects as project}
-                        <ProjectCard 
-                            image={project.image}
-                            imageWidth={project.desktopWidth}
-                            imageAlt={project.imageAlt}
-                            extraImagePadding={project.padding}
-                            name={project.name}
-                            text={project.text}
-                            tags={project.tags}
-                        />
-                    {/each}
-                </div>
-                
-                <div class='desktop-scroll-control'>
-                    <div style={`background-color: ${$store.palette.scrollDots};`} class='circle one' bind:this={circleOne}></div>
-                    <div style={`background-color: ${$store.palette.scrollDots};`} class='circle' bind:this={circleTwo}></div>
-                    <div style={`background-color: ${$store.palette.scrollDots};`} class='circle' bind:this={circleThree}></div>
-                </div>
-            </section>
-        
-            <section class='mobile-project-section'>
-                {#each projects as project}
-                    <ProjectCard 
-                        image={project.image}
-                        imageWidth={project.imageWidth}
-                        imageAlt={project.imageAlt}
-                        extraImagePadding={project.padding}
-                        name={project.name}
-                        text={project.text}
-                        tags={project.tags}
-                    />
-                {/each}
-            </section>
+<div class='homepage-contents'>
+    <section class='hero-section'>
+        <div class='hero-image'>
+            <img src='/assets/homepage/headshot.jpeg' alt="Nate headshot">
         </div>
+
+        <div class='hero-text'>
+            <h1>Nate Patrick</h1>
     
-        <Footer />
-    </div>
-</main>
+            <p>
+                is a product designer who is fascinated with the intersection of technology, 
+                science, and art. A unique combination of elements, he specializes in design 
+                thinking, <strong>leadership</strong>, <strong>strategy</strong>, <strong>user experiences</strong>, 
+                interfaces, service design, books, and, occasionally, physical spaces. 
+            </p>
+    
+            <div class='desktop-scroll-arrow-container'>
+                <p class='hero-arrow-text'>Here is some of his work</p>
+                <div class='desktop-scroll-arrow'>
+                    <DesktopArrowIcon />
+                </div>
+            </div>
+        </div>
+
+        <div class='mobile-scroll-arrow-container'>
+            <MobileArrowIcon />
+        </div>
+    </section>
+
+    <section class='desktop-project-section'>
+        <div class='projects' on:scroll={handleScroll} bind:this={projectsElement}>
+            {#each projects as project}
+                <ProjectCard 
+                    image={project.image}
+                    imageWidth={project.desktopWidth}
+                    imageAlt={project.imageAlt}
+                    extraImagePadding={project.padding}
+                    name={project.name}
+                    text={project.text}
+                    tags={project.tags}
+                />
+            {/each}
+        </div>
+        
+        <div class='desktop-scroll-control'>
+            <div style={`background-color: ${$store.palette.scrollDots};`} class='circle one' bind:this={circleOne}></div>
+            <div style={`background-color: ${$store.palette.scrollDots};`} class='circle' bind:this={circleTwo}></div>
+            <div style={`background-color: ${$store.palette.scrollDots};`} class='circle' bind:this={circleThree}></div>
+        </div>
+    </section>
+
+    <section class='mobile-project-section'>
+        {#each projects as project}
+            <ProjectCard 
+                image={project.image}
+                imageWidth={project.imageWidth}
+                imageAlt={project.imageAlt}
+                extraImagePadding={project.padding}
+                name={project.name}
+                text={project.text}
+                tags={project.tags}
+            />
+        {/each}
+    </section>
+</div>
+
+<Footer />
 
 <style>
-    .foreground {
-        padding: 37px 20px 89px;
-    }
-
-    .homepage {
-        /* overflow: hiddden; */
-        min-height: 100vh;
-        /* background: no-repeat #E0E0E0 url('/assets/homepage/gradient.svg');
-        background-size: contain;
-        background-position-y: 50%; */
-    }
-
     .hero-section {
         margin-bottom: 248px;
         pointer-events: none;

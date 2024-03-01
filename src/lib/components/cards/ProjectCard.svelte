@@ -7,18 +7,24 @@
             extraImagePadding = false,
             name,
             text,
+            url,
             tags = []
 </script>
 
 <div class='project-card'>
-    <div class='project-image' style={`width: ${imageWidth}`}>
-        <img src={image} alt={imageAlt} width={imageWidth}>
-    </div>
-
-    <div class={`project-text ${extraImagePadding ? 'extra-padding' : ''}`}>
-        <h2>{name}</h2>
-        <p>{text}</p>
-    </div>
+    <a 
+        class='project-card-link' 
+        href={url}
+    >
+        <div class='project-image' style={`width: ${imageWidth}`}>
+            <img src={image} alt={imageAlt} width={imageWidth}>
+        </div>
+    
+        <div class={`project-text ${extraImagePadding ? 'extra-padding' : ''}`}>
+            <h2>{name}</h2>
+            <p>{text}</p>
+        </div>
+    </a>
 
     <div class='tag-area'>
         {#each tags as tag}
@@ -30,6 +36,12 @@
 <style>
     .project-card {
         margin: 20px 0;
+    }
+
+    .project-card-link {
+        cursor: pointer;
+        text-decoration: none;
+        color: inherit;
     }
 
     .project-image {

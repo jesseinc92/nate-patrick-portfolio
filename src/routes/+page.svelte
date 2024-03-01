@@ -15,6 +15,7 @@
             imageAlt: 'computer mockup',
             padding: false,
             name: 'CAS',
+            url: '/cas',
             text: 'Creating great search experiences and tools for scientific information and improving people’s lives through the power of chemistry and biology.',
             tags: ['product design', 'ux/ui', 'prototyping', 'strategy', 'user research', 'leadership']
         },
@@ -25,6 +26,7 @@
             imageAlt: 'daybase app view mockup',
             padding: false,
             name: 'Daybase',
+            url: '/daybase',
             text: 'A start up that sought to revolutionize the workday by helping you work where you live.',
             tags: ['product design', 'wireframing', 'prototyping', 'branding', 'strategy', 'user research', 'project management'],
         },
@@ -35,10 +37,16 @@
             imageAlt: 'a selection of book covers',
             padding: true,
             name: 'Clog X',
+            url: '/clog',
             text: 'A book series which explores, from multiple viewpoints and through a variety of means, a single subject particularly relevant to now.',
             tags: ['editorial design', 'content', 'writing', 'research', 'interviews', 'distribution']
         }
     ]
+
+    // WORK ON THIS. MAY BE A SOLUTION TO FANCY SCROLL
+    function scrollendExample() {
+        console.log('scroll ends!')
+    }
 
     let projectsElement, circleOne, circleTwo, circleThree
     let scrollTimeout, i = 1, oldScroll = 0, newScroll = 0, intermediate;
@@ -98,7 +106,7 @@
     </section>
 
     <section class='desktop-project-section'>
-        <div class='projects' on:scroll={handleScroll} bind:this={projectsElement}>
+        <div class='projects' on:scroll={handleScroll} on:scrollend={scrollendExample} bind:this={projectsElement}>
             {#each projects as project}
                 <ProjectCard 
                     image={project.image}
@@ -106,6 +114,7 @@
                     imageAlt={project.imageAlt}
                     extraImagePadding={project.padding}
                     name={project.name}
+                    url={project.url}
                     text={project.text}
                     tags={project.tags}
                 />
@@ -197,14 +206,6 @@
             display: none;
         }
 
-        .foreground {
-            max-width: 1300px;
-            margin: auto;
-            padding: 58px 100px;
-            min-height: calc(100vh - 116px);
-            position: relative;
-        }
-
         .homepage-contents {
             display: flex;
             justify-content: space-between;
@@ -268,6 +269,7 @@
             position: absolute;
             right: -41px;
             top: 50%;
+            z-index: 2;
         }
 
         .circle {

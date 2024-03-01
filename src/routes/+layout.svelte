@@ -21,4 +21,14 @@
         background-size: contain;
         background-position-y: 50%; */
     }
+
+    @media screen and (min-width: 768px) {
+        .foreground {
+            max-width: 1300px;
+            margin: auto;
+            padding: 58px 100px;
+            min-height: calc(100vh - 116px);
+            position: relative;
+        }
+    }
 </style>
